@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/2.2" fx:controller="tvtrackerclient.GuiController">
-    <TextField GridPane.rowIndex = "0" GridPane.columnIndex = "0" text="Enter Search Phrase"/>
+    <TextField GridPane.rowIndex = "0" GridPane.columnIndex = "0" text="Enter Search Phrase" fx:id = "searchTextField"/>
     <ChoiceBox GridPane.rowIndex = "0" GridPane.columnIndex = "1" fx:id = "searchOption" value = "Program">
         <items>
             <FXCollections fx:factory = "observableArrayList">
@@ -18,19 +18,38 @@
             </FXCollections>
         </items>
     </ChoiceBox>
-    <Button GridPane.rowIndex = "0" GridPane.columnIndex = "2" text="Search" />
+    <Button GridPane.rowIndex = "0" GridPane.columnIndex = "2" text="Search" fx:id = "searchButton" onAction = "#search"/>
     <!--There has to be 2 tables - one for searching by Program and one for Channel -->
-    <TableView fx:id = "programSearchTable" GridPane.rowIndex = "1" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
+    <TableView fx:id = "programSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
         <columns>
             <TableColumn fx:id = "channelNameColumn" prefWidth = "200" text = "Channel"/>
             <TableColumn fx:id = "channelTimeColumn" prefWidth = "200" text = "Time"/>
         </columns>
     </TableView>
     
-    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "1" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
+    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
         <columns>
             <TableColumn fx:id = "programNameColumn" prefWidth = "200" text = "Program"/>
             <TableColumn fx:id = "programTimeColumn" prefWidth = "200" text = "Time"/>
         </columns>
     </TableView>
+    
+    <Pane fx:id = "spacer" GridPane.rowIndex = "1" GridPane.columnIndex = "3" prefWidth = "100"/>
+    <Button GridPane.rowIndex = "1" GridPane.columnIndex = "4" text = "Program" fx:id = "chooseProgramBtn" onAction = "#displayPrograms"/>
+    <Button GridPane.rowIndex = "1" GridPane.columnIndex = "5" text = "Channel" fx:id = "chooseChannelBtn" onAction = "#displayChannels"/>
+    
+    <TableView fx:id = "DBprogramTable" GridPane.rowIndex = "2" GridPane.columnIndex = "5" prefWidth="400" visible = "false">
+        <columns>
+            <TableColumn fx:id = "DBchannelNameColumn" prefWidth = "200" text = "Channel"/>
+            <TableColumn fx:id = "DBchannelTimeColumn" prefWidth = "200" text = "Broadcasts"/>
+        </columns>
+    </TableView>
+    
+    <TableView fx:id = "DBchannelTable" GridPane.rowIndex = "2" GridPane.columnIndex = "5" prefWidth="400" visible = "false">
+        <columns>
+            <TableColumn fx:id = "DBprogramNameColumn" prefWidth = "200" text = "Program"/>
+            <TableColumn fx:id = "DBprogramTimeColumn" prefWidth = "200" text = "Broadcasts"/>
+        </columns>
+    </TableView>
+    
 </GridPane>

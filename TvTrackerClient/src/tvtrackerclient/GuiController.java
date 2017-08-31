@@ -7,19 +7,47 @@ package tvtrackerclient;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 /**
  *
  * @author Oskar Kowalewski
  */
-public class GuiController{ //implements Initializable{
+public class GuiController implements Initializable{
+    
+    @FXML TableView DBprogramTable;
+    @FXML TableView DBchannelTable;
+    @FXML ChoiceBox searchOption;
+    @FXML TextField searchTextField;
+    
+    @FXML
+    public void displayPrograms()
+    {
+        DBchannelTable.setVisible(false);
+        DBprogramTable.setVisible(true);
+    }
+    
+    @FXML
+    public void displayChannels()
+    {
+        DBchannelTable.setVisible(true);
+        DBprogramTable.setVisible(false);
+    }
+    
+    @FXML
+    public void search()
+    {
+        //sending GET request to web service and getting HTML document in response here
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
+    }
 
-    //@Override
-    //public void initialize(URL location, ResourceBundle resources) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        //<TableColumn fx:id = "channelNameColumn" prefWidth = "200"/>
-           // <TableColumn fx:id = "channelTimeColumn" prefWidth = "200"/>
-  //  }
     
 }

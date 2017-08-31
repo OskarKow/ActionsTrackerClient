@@ -28,7 +28,7 @@ public class TvTrackerClient extends Application {
     public void start(Stage primaryStage) {
         try{
             GridPane myPane = (GridPane)FXMLLoader.load(getClass().getResource("gui.fxml"));
-            Scene scene = new Scene(myPane,900,700);
+            Scene scene = new Scene(myPane,1200,700);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
