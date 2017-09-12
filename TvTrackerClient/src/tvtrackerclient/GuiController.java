@@ -46,11 +46,15 @@ public class GuiController implements Initializable{
         //sending GET request to web service and getting HTML document in response here
         String searchPhrase = searchTextField.getText();
         String htmlDocument;
+        String webURL;
         if(!searchPhrase.equals("Enter Search Phrase")) //default text field message
         {
             if(searchOption.getValue().equals("Channel")) //we search for channel
             {
-                System.out.println(RequestsHandler.replaceCharacters(' ', '+', searchPhrase));
+                searchPhrase = RequestsHandler.replaceCharacters(' ', '_', searchPhrase);
+                webURL = "http://www.telemagazyn.pl/" + searchPhrase;
+                htmlDocument = RequestsHandler.sendGetRequest(webURL);
+                System.out.println(htmlDocument);
             }
         }
     }

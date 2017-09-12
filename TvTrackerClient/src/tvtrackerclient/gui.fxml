@@ -27,7 +27,7 @@
         </columns>
     </TableView>
     
-    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
+    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "true">
         <columns>
             <TableColumn fx:id = "programNameColumn" prefWidth = "200" text = "Program"/>
             <TableColumn fx:id = "programTimeColumn" prefWidth = "200" text = "Time"/>
