@@ -13,7 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import tvtrackerclient.http.HtmlProcessor;
 import tvtrackerclient.http.RequestsHandler;
+import tvtrackerclient.model.Channel;
 
 /**
  *
@@ -54,7 +56,8 @@ public class GuiController implements Initializable{
                 searchPhrase = RequestsHandler.replaceCharacters(' ', '_', searchPhrase);
                 webURL = "http://www.telemagazyn.pl/" + searchPhrase;
                 htmlDocument = RequestsHandler.sendGetRequest(webURL);
-                System.out.println(htmlDocument);
+                //System.out.println(htmlDocument);
+                HtmlProcessor.fillChannelBroadcasts(htmlDocument, new Channel("ebe_ebe"));
             }
         }
     }

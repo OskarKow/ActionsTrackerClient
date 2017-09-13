@@ -5,6 +5,9 @@
  */
 package tvtrackerclient.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Oskar Kowalewski
@@ -13,13 +16,26 @@ package tvtrackerclient.model;
  */
 public class Channel {
     private String name;
-    private String[] programNames;
-    private int[] programHours;
-    private int[] programMinutes;
+    private LinkedList<String> programNames;
+    private LinkedList<Integer> programHours;
+    private LinkedList<Integer> programMinutes;
     private int numberOfBroadcasts;
     
     public Channel(String chName)
     {
         name = chName;
+        numberOfBroadcasts = 0;
+        programNames = new LinkedList<>();
+        programHours = new LinkedList<>();
+        programMinutes = new LinkedList<>();
+    }
+    
+    public void addProgram(String name, int hour, int minutes)
+    {
+        numberOfBroadcasts++;
+        programNames.add(name);
+        programHours.add(hour);
+        programMinutes.add(minutes);
+        System.out.println(name + " " + hour + " " + minutes);
     }
 }
