@@ -10,7 +10,7 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/2.2" fx:controller="tvtrackerclient.GuiController">
     <TextField GridPane.rowIndex = "0" GridPane.columnIndex = "0" text="Enter Search Phrase" fx:id = "searchTextField"/>
-    <ChoiceBox GridPane.rowIndex = "0" GridPane.columnIndex = "1" fx:id = "searchOption" value = "Program">
+    <ChoiceBox GridPane.rowIndex = "0" GridPane.columnIndex = "1" fx:id = "searchOption" value = "Program" onAction="#searchOptionChosen">
         <items>
             <FXCollections fx:factory = "observableArrayList">
                 <String fx:value = "Program"/>
@@ -27,10 +27,10 @@
         </columns>
     </TableView>
     
-    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "true">
+    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
         <columns>
-            <TableColumn fx:id = "programNameColumn" prefWidth = "200" text = "Program"/>
-            <TableColumn fx:id = "programTimeColumn" prefWidth = "200" text = "Time"/>
+            <TableColumn fx:id = "programNameColumn" prefWidth = "300" text = "Program"/>
+            <TableColumn fx:id = "programTimeColumn" prefWidth = "100" text = "Time"/>
         </columns>
     </TableView>
     

@@ -16,26 +16,34 @@ import java.util.List;
  */
 public class Channel {
     private String name;
-    private LinkedList<String> programNames;
-    private LinkedList<Integer> programHours;
-    private LinkedList<Integer> programMinutes;
+    private LinkedList<ProgramBroadcast> broadcasts;
     private int numberOfBroadcasts;
     
     public Channel(String chName)
     {
         name = chName;
         numberOfBroadcasts = 0;
-        programNames = new LinkedList<>();
-        programHours = new LinkedList<>();
-        programMinutes = new LinkedList<>();
+        broadcasts = new LinkedList<>();
     }
     
     public void addProgram(String name, int hour, int minutes)
     {
         numberOfBroadcasts++;
-        programNames.add(name);
-        programHours.add(hour);
-        programMinutes.add(minutes);
-        System.out.println(name + " " + hour + " " + minutes);
+        broadcasts.add(new ProgramBroadcast(name, hour, minutes));
+    }
+    
+    public LinkedList getBroadcasts()
+    {
+        return broadcasts;
+    }
+    
+    public void setName(String newName)
+    {
+        name = newName;
+    }
+    
+    public void clearBroadcasts()
+    {
+        broadcasts.clear();
     }
 }

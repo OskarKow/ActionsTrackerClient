@@ -16,14 +16,13 @@ public final class HtmlProcessor {
     public static void fillChannelBroadcasts(String htmlDocument, Channel channel)
     {
         Scanner scan = new Scanner(htmlDocument);
-        
+        channel.clearBroadcasts();
         if(moveScannerToBroadcast(scan) == true)
         {
             //now the scanner is at the begginig of tv program section in html code
             while(addNextBroadcastToChannel(scan, channel) == true)
             {
-                //broadcast added
-                //maybe there will be adding to TableView in GUI ?
+
             }
         }else{
             System.out.println("ERROR. PROGRAMS NOT FOUND");
