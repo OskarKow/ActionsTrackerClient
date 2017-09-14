@@ -3,6 +3,7 @@ package tvtrackerclient.http;
 
 import java.util.Scanner;
 import tvtrackerclient.model.Channel;
+import tvtrackerclient.model.Program;
 
 /**
  *
@@ -17,7 +18,7 @@ public final class HtmlProcessor {
     {
         Scanner scan = new Scanner(htmlDocument);
         channel.clearBroadcasts();
-        if(moveScannerToBroadcast(scan) == true)
+        if(moveScannerChannelSearch(scan) == true)
         {
             //now the scanner is at the begginig of tv program section in html code
             while(addNextBroadcastToChannel(scan, channel) == true)
@@ -29,8 +30,8 @@ public final class HtmlProcessor {
         }
     }
     
-    //method moves Scanner to the point in html code where channel's program begins and returns true or return false when it doesnt find one
-    private static boolean moveScannerToBroadcast(Scanner scan)
+    //method moves Scanner to the point in html code where channel's program begins and returns true or returns false when it doesnt find one
+    private static boolean moveScannerChannelSearch(Scanner scan)
     {
         String line;
         //Look for start of broadcasts in html code
@@ -114,6 +115,41 @@ public final class HtmlProcessor {
             }
         }
         return -1;
+    }
+    
+    public static void fillProgramBroadcasts(String htmlDocument, Program program)
+    {
+        Scanner scan = new Scanner(htmlDocument);
+        //first we have to find url to program's site, then find needed info in there
+        System.out.println(findProgramURL(scan));
+    }
+    
+    //we look for program url inside of html code
+    private static String findProgramURL(Scanner scan)
+    {
+        String result = "";
+        String line;
+        //Look for start of broadcasts in html code
+        while(scan.hasNextLine())
+        {
+            line = scan.nextLine();
+            line = line.replace(" ","");
+            if(line.contains("<h2>Programy</h2>")) //broadcast starts with html element <h2>Programy</h2>
+            {
+                //now we look for first link after Program section in html code
+                while(scan.hasNextLine())
+                {
+                    line = scan.nextLine();
+                    if(line.contains("<a href="))
+                    {
+                        line = line.replace(" ", "");
+                        result = line.substring(8,line.length() - 2);
+                        return result;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 }

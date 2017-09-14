@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import tvtrackerclient.http.HtmlProcessor;
 import tvtrackerclient.http.RequestsHandler;
 import tvtrackerclient.model.Channel;
+import tvtrackerclient.model.Program;
 import tvtrackerclient.model.ProgramBroadcast;
 
 /**
@@ -76,13 +77,20 @@ public class GuiController implements Initializable{
         {
             if(searchOption.getValue().equals("Channel")) //we search for channel
             {
-                searchPhrase = RequestsHandler.replaceCharacters(' ', '_', searchPhrase);
+                searchPhrase = searchPhrase.replace(' ','_');
                 webURL = "http://www.telemagazyn.pl/" + searchPhrase;
                 htmlDocument = RequestsHandler.sendGetRequest(webURL);
                 searchedChannel.setName(searchPhrase);
                 HtmlProcessor.fillChannelBroadcasts(htmlDocument, searchedChannel);
                 channelSearchTable.getItems().clear();
                 channelSearchTable.getItems().setAll(searchedChannel.getBroadcasts());
+            }
+            else{
+                
+                searchPhrase = searchPhrase.replace(' ','+');
+                webURL = "http://www.telemagazyn.pl/szukaj/?q=" + searchPhrase;
+                htmlDocument = RequestsHandler.sendGetRequest(webURL);
+                HtmlProcessor.fillProgramBroadcasts(htmlDocument, new Program("u")); //debug
             }
         }
     }

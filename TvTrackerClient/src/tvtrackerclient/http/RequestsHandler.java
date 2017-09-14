@@ -53,20 +53,5 @@ public class RequestsHandler {
                         return document;
 		}
     }
-    //method changes all 'oldOne' characters to 'newOne' characters in string 'chars'
-    public static String replaceCharacters(char oldOne, char newOne, String chars)
-    {
-        char[] result = new char[chars.length()];
-        char stringChar;
-        
-        for(int i=0; i < chars.length(); i++)
-        {
-            stringChar = chars.charAt(i);
-            if(stringChar == oldOne)
-                result[i] = newOne;
-            else result[i] = stringChar;
-        }
-        return new String(result);
-    }
     
 }
