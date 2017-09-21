@@ -20,16 +20,17 @@
     </ChoiceBox>
     <Button GridPane.rowIndex = "0" GridPane.columnIndex = "2" text="Search" fx:id = "searchButton" onAction = "#search"/>
     <!--There has to be 2 tables - one for searching by Program and one for Channel -->
-    <TableView fx:id = "programSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
+    <TableView fx:id = "programSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="500" visible = "false">
         <columns>
             <TableColumn fx:id = "channelNameColumn" prefWidth = "200" text = "Channel"/>
-            <TableColumn fx:id = "channelTimeColumn" prefWidth = "200" text = "Time"/>
+            <TableColumn fx:id = "channelDateColumn" prefWidth = "200" text = "Date"/>
+            <TableColumn fx:id = "channelTimeColumn" prefWidth = "100" text = "Time"/>
         </columns>
     </TableView>
     
-    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="400" visible = "false">
+    <TableView fx:id = "channelSearchTable" GridPane.rowIndex = "2" GridPane.columnIndex = "0" prefWidth="500" visible = "false">
         <columns>
-            <TableColumn fx:id = "programNameColumn" prefWidth = "300" text = "Program"/>
+            <TableColumn fx:id = "programNameColumn" prefWidth = "400" text = "Program"/>
             <TableColumn fx:id = "programTimeColumn" prefWidth = "100" text = "Time"/>
         </columns>
     </TableView>

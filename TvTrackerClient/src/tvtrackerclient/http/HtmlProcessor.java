@@ -2,6 +2,7 @@
 package tvtrackerclient.http;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import tvtrackerclient.model.Channel;
 import tvtrackerclient.model.Program;
 
@@ -9,7 +10,7 @@ import tvtrackerclient.model.Program;
  *
  * @author Oskar Kowalewski
  * 
- * Class will contain methods for searching some desired data in HTML document
+ * Class will contain methods for searching some needed data in HTML document
  */
 public final class HtmlProcessor {
     
@@ -18,27 +19,28 @@ public final class HtmlProcessor {
     {
         Scanner scan = new Scanner(htmlDocument);
         channel.clearBroadcasts();
-        if(moveScannerChannelSearch(scan) == true)
+        if(moveScannerToLine("id=\"rano\"", scan) == true)
         {
             //now the scanner is at the begginig of tv program section in html code
             while(addNextBroadcastToChannel(scan, channel) == true)
             {
-
+                //broadcast added
             }
         }else{
             System.out.println("ERROR. PROGRAMS NOT FOUND");
         }
     }
     
-    //method moves Scanner to the point in html code where channel's program begins and returns true or returns false when it doesnt find one
-    private static boolean moveScannerChannelSearch(Scanner scan)
+    //method takes Scanner object and moves cursor to the line which contains 'stringToContain' string.
+    private static boolean moveScannerToLine(String stringToContain, Scanner scan)
     {
         String line;
         //Look for start of broadcasts in html code
         while(scan.hasNextLine())
         {
             line = scan.nextLine();
-            if(line.contains("id=\"rano\"")) //broadcast starts with html element with id="rano"
+            line = line.replace(" ", "");
+            if(line.contains(stringToContain)) //broadcast starts with html element with id="rano"
                 return true;
         }
         return false;
@@ -120,8 +122,82 @@ public final class HtmlProcessor {
     public static void fillProgramBroadcasts(String htmlDocument, Program program)
     {
         Scanner scan = new Scanner(htmlDocument);
+        program.clearBroadcasts();
         //first we have to find url to program's site, then find needed info in there
-        System.out.println(findProgramURL(scan));
+        String programSite = HtmlProcessor.findProgramURL(scan);
+        String url, programHtml;
+        Scanner programScan;
+        if(programSite.equals("") == false)
+        {
+            url = "http://telemagazyn.pl" + programSite;
+            programHtml = RequestsHandler.sendGetRequest(url);
+            programScan = new Scanner(programHtml);
+            while(hasNextEmission(programScan))
+            {
+                addNextEmission(programScan, program);
+            }
+        }
+    }
+    
+    //returns true if there is next emisson info in the code, returns false otherwise
+    public static boolean hasNextEmission(Scanner htmlCode)
+    {
+        String line;
+        while(htmlCode.hasNextLine() == true)
+        {
+            line = htmlCode.nextLine();
+            if(line.contains("class=\"emisjaSzczegoly\""))
+                return true;
+        }
+        return false;
+    }
+    
+    public static void addNextEmission(Scanner scan, Program program)
+    {
+        String line;
+        String date="d";
+        String time="t";
+        String channel="";
+        Scanner lineScan;
+        while(scan.hasNextLine() == true)
+        {
+            line = scan.nextLine();
+            if(line.contains("class=\"emisjaDzien\""))
+            {
+                lineScan = new Scanner(line);
+                lineScan.useDelimiter("<[^>]*>");
+                if(lineScan.hasNext() == true)
+                {
+                    date = lineScan.next();
+                }
+            }
+            if(line.contains("class=\"emisjaGodzina\"") == true)
+            {
+                lineScan = new Scanner(line);
+                lineScan.useDelimiter("<[^>]*>");
+                if(lineScan.hasNext() == true)
+                {
+                    time = lineScan.next();
+                    
+                }
+            }
+            if(line.contains("<a") == true)
+            {
+                if(line.contains("emisjaOdcinek") == false)//it means it's <a href... with Channel link
+                {
+                    lineScan = new Scanner(line);
+                    lineScan.useDelimiter("<[^>]*>");
+                    if(lineScan.hasNext() == true)
+                    {
+                        channel = lineScan.next();
+                        //got all needed data
+                        //System.out.println("time: " + time);
+                        program.addChannel(channel, time, date);
+                        return;
+                    }
+                }
+            }
+        }
     }
     
     //we look for program url inside of html code

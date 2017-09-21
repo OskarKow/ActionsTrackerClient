@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tvtrackerclient.model;
+
+import java.util.LinkedList;
 
 /**
  *
@@ -11,13 +9,37 @@ package tvtrackerclient.model;
  */
 public class Program {
     private String name;
-    private String[] channelNames;
-    private int[] hour;
-    private int[] minutes;
+    private LinkedList<ChannelBroadcast> broadcasts;
     
     public Program(String programName)
     {
         name = programName;
+        broadcasts = new LinkedList<>();
+    }
+    
+    public void addChannel(String channelName, String time, String date)
+    {
+        System.out.println(channelName + " " + time + " " + date);
+        broadcasts.add(new ChannelBroadcast(channelName, time, date));
+    }
+    
+    public void setName(String programName)
+    {
+        name = programName;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    
+    public LinkedList getBroadcasts()
+    {
+        return broadcasts;
+    }
+    
+    public void clearBroadcasts()
+    {
+        broadcasts.clear();
     }
     
 }
